@@ -1,90 +1,297 @@
 @extends('layouts/index')
 
-@section('css')
-<link href="{{ asset('../asset/vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
-<link href="{{ asset('../asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">\
+@section('judul')
+
 @endsection
 
 @section('konten')
+
+@if (Session::has('success'))        
+           
+    <script>                    
+        Swal.fire(
+        'Data berhasil tersimpan!',
+        'You clicked the button!',
+        'success'
+        )
+        $('.swal2-content').remove();                   
+        
+    </script>
+
+@endif
 <div class="content-body">
     <div class="container-fluid">
-
-        <div class="form-head d-flex mb-3 align-items-start">
-            <div class="mr-auto d-none d-lg-block">
-                <h2 class="text-black font-w600 mb-0">Point of Sales</h2>
-                <p class="mb-0">Selamat Datang</p>
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome back!</h4>
+                    <p class="mb-0">Your business dashboard template</p>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="dataPenjualan">Data Penjualan</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Penjualan</a></li>
+                </ol>
             </div>
         </div>
 
-        @auth                
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                onOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-                });
-                Toast.fire({
-                icon: 'success',
-                title: 'Anda Berhasil Login !',
-                padding: '2.3rem'
-                });
-                
-               $('.swal2-content').remove();   
-            </script>
-       
-        @endauth
-
-        <div class="row">
+        <div class="col-lg-12">
             
-            <div class="col-xl-6 col-xxl-6 col-lg-6 col-md-6 col-sm-6">
-                <div class="widget-stat card ">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="mr-3 bgl-primary text-primary">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 30.5H22.75C23.7442 30.4989 24.6974 30.1035 25.4004 29.4004C26.1035 28.6974 26.4989 27.7442 26.5 26.75V16.75C26.5 16.4185 26.3683 16.1005 26.1339 15.8661C25.8995 15.6317 25.5815 15.5 25.25 15.5C24.9185 15.5 24.6005 15.6317 24.3661 15.8661C24.1317 16.1005 24 16.4185 24 16.75V26.75C23.9997 27.0814 23.8679 27.3992 23.6336 27.6336C23.3992 27.8679 23.0814 27.9997 22.75 28H4C3.66857 27.9997 3.3508 27.8679 3.11645 27.6336C2.88209 27.3992 2.7503 27.0814 2.75 26.75V9.25C2.7503 8.91857 2.88209 8.6008 3.11645 8.36645C3.3508 8.13209 3.66857 8.0003 4 8H15.25C15.5815 8 15.8995 7.8683 16.1339 7.63388C16.3683 7.39946 16.5 7.08152 16.5 6.75C16.5 6.41848 16.3683 6.10054 16.1339 5.86612C15.8995 5.6317 15.5815 5.5 15.25 5.5H4C3.00577 5.50109 2.05258 5.89653 1.34956 6.59956C0.646531 7.30258 0.251092 8.25577 0.25 9.25V26.75C0.251092 27.7442 0.646531 28.6974 1.34956 29.4004C2.05258 30.1035 3.00577 30.4989 4 30.5Z" fill="#2F4CDD"/><path d="M25.25 0.5C24.0139 0.5 22.8055 0.866556 21.7777 1.55331C20.7499 2.24007 19.9488 3.21619 19.4758 4.35823C19.0027 5.50027 18.8789 6.75693 19.1201 7.96931C19.3613 9.1817 19.9565 10.2953 20.8306 11.1694C21.7047 12.0435 22.8183 12.6388 24.0307 12.8799C25.2431 13.1211 26.4997 12.9973 27.6418 12.5242C28.7838 12.0512 29.7599 11.2501 30.4467 10.2223C31.1334 9.19451 31.5 7.98613 31.5 6.75C31.498 5.093 30.8389 3.50442 29.6673 2.33274C28.4956 1.16106 26.907 0.501952 25.25 0.5ZM25.25 10.5C24.5083 10.5 23.7833 10.2801 23.1666 9.86801C22.5499 9.45596 22.0693 8.87029 21.7855 8.18506C21.5016 7.49984 21.4274 6.74584 21.5721 6.01841C21.7167 5.29098 22.0739 4.6228 22.5983 4.09835C23.1228 3.5739 23.791 3.21675 24.5184 3.07206C25.2458 2.92736 25.9998 3.00162 26.6851 3.28545C27.3703 3.56928 27.9559 4.04993 28.368 4.66661C28.7801 5.2833 29 6.00832 29 6.75C28.9989 7.74423 28.6035 8.69742 27.9004 9.40044C27.1974 10.1035 26.2442 10.4989 25.25 10.5Z" fill="#2F4CDD"/><path d="M6.5 13H12.75C13.0815 13 13.3995 12.8683 13.6339 12.6339C13.8683 12.3995 14 12.0815 14 11.75C14 11.4185 13.8683 11.1005 13.6339 10.8661C13.3995 10.6317 13.0815 10.5 12.75 10.5H6.5C6.16848 10.5 5.85054 10.6317 5.61612 10.8661C5.3817 11.1005 5.25 11.4185 5.25 11.75C5.25 12.0815 5.3817 12.3995 5.61612 12.6339C5.85054 12.8683 6.16848 13 6.5 13Z" fill="#2F4CDD"/><path d="M5.25 16.75C5.25 17.0815 5.3817 17.3995 5.61612 17.6339C5.85054 17.8683 6.16848 18 6.5 18H17.75C18.0815 18 18.3995 17.8683 18.6339 17.6339C18.8683 17.3995 19 17.0815 19 16.75C19 16.4185 18.8683 16.1005 18.6339 15.8661C18.3995 15.6317 18.0815 15.5 17.75 15.5H6.5C6.16848 15.5 5.85054 15.6317 5.61612 15.8661C5.3817 16.1005 5.25 16.4185 5.25 16.75Z" fill="#2F4CDD"/></svg>
-                            </span>
-                            <div class="media-body">
-                                <h3 class="mb-0 text-black"><span class="counter ml-0">900</span></h3>
-                                <p class="mb-0">Barang</p>
+            <form action="{{ route('penjualan.store') }}" method="post">
+			    {{ @csrf_field() }}
+                                    
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mt-3 ">
+                            <div class="card-body">
+                                <div class="block margin-bottom-sm">
+                                    <label for="inlineFormInput" class="col-sm-form-control-label">Tanggal</label>                                    
+                                    <input type="date" value="{{ date('Y-m-d') }}" name="tanggal" class="mr-sm-3 form-control datepicker">                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mt-3 ">
+                            <div class="card-body">
+                                <div class="block margin-bottom-sm">
+                                    <label for="inlineFormInput" class="col-sm-form-control-label">User</label>                                    
+                                    <input type="text" readonly value="{{ Auth::user()->name }}" class="mr-sm-3 form-control">                                    
+                                    <input type="hidden" readonly value="{{ Auth::user()->id }}" name="user_id" class="mr-sm-3 form-control">                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card mt-3 ">
+                            <div class="card-body">
+                                <div class="block margin-bottom-sm">
+                                    <label for="inlineFormInput" class="col-sm-form-control-label">Customer</label>
+                                    <input type="text" value="Umum"  name="customer" class="mr-sm-3 form-control">                                        
+                                    <input id="subtotal-val" type="hidden
+                                    " value="Umum"  name="" class="mr-sm-3 form-control">                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <div class="block margin-bottom-sm">
+                                    <center>
+                                    <button type="button" class="btn btn-outline-primary btn-rounded" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                        Select Product</button>
+                                    <br><br>
+                                    </center>
+                                    <div class="table-responsive">
+                                        <table id="keranjang" class="table table-bordered table-striped verticle-middle table-responsive-sm">
+                                            <thead align="center">
+                                                <th width="295">Nama Barang</th>
+                                                <th width="45">Qty</th>
+                                                <th width="212">Harga</th>
+                                                <th width="228">Sub Total</th>
+                                                <th width="43"> Aksi</th>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-6 col-xxl-6 col-lg-6 col-md-6 col-sm-6">
-                <div class="widget-stat card">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="mr-3 bgl-primary text-primary">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 30.5H22.75C23.7442 30.4989 24.6974 30.1035 25.4004 29.4004C26.1035 28.6974 26.4989 27.7442 26.5 26.75V16.75C26.5 16.4185 26.3683 16.1005 26.1339 15.8661C25.8995 15.6317 25.5815 15.5 25.25 15.5C24.9185 15.5 24.6005 15.6317 24.3661 15.8661C24.1317 16.1005 24 16.4185 24 16.75V26.75C23.9997 27.0814 23.8679 27.3992 23.6336 27.6336C23.3992 27.8679 23.0814 27.9997 22.75 28H4C3.66857 27.9997 3.3508 27.8679 3.11645 27.6336C2.88209 27.3992 2.7503 27.0814 2.75 26.75V9.25C2.7503 8.91857 2.88209 8.6008 3.11645 8.36645C3.3508 8.13209 3.66857 8.0003 4 8H15.25C15.5815 8 15.8995 7.8683 16.1339 7.63388C16.3683 7.39946 16.5 7.08152 16.5 6.75C16.5 6.41848 16.3683 6.10054 16.1339 5.86612C15.8995 5.6317 15.5815 5.5 15.25 5.5H4C3.00577 5.50109 2.05258 5.89653 1.34956 6.59956C0.646531 7.30258 0.251092 8.25577 0.25 9.25V26.75C0.251092 27.7442 0.646531 28.6974 1.34956 29.4004C2.05258 30.1035 3.00577 30.4989 4 30.5Z" fill="#2F4CDD"/><path d="M25.25 0.5C24.0139 0.5 22.8055 0.866556 21.7777 1.55331C20.7499 2.24007 19.9488 3.21619 19.4758 4.35823C19.0027 5.50027 18.8789 6.75693 19.1201 7.96931C19.3613 9.1817 19.9565 10.2953 20.8306 11.1694C21.7047 12.0435 22.8183 12.6388 24.0307 12.8799C25.2431 13.1211 26.4997 12.9973 27.6418 12.5242C28.7838 12.0512 29.7599 11.2501 30.4467 10.2223C31.1334 9.19451 31.5 7.98613 31.5 6.75C31.498 5.093 30.8389 3.50442 29.6673 2.33274C28.4956 1.16106 26.907 0.501952 25.25 0.5ZM25.25 10.5C24.5083 10.5 23.7833 10.2801 23.1666 9.86801C22.5499 9.45596 22.0693 8.87029 21.7855 8.18506C21.5016 7.49984 21.4274 6.74584 21.5721 6.01841C21.7167 5.29098 22.0739 4.6228 22.5983 4.09835C23.1228 3.5739 23.791 3.21675 24.5184 3.07206C25.2458 2.92736 25.9998 3.00162 26.6851 3.28545C27.3703 3.56928 27.9559 4.04993 28.368 4.66661C28.7801 5.2833 29 6.00832 29 6.75C28.9989 7.74423 28.6035 8.69742 27.9004 9.40044C27.1974 10.1035 26.2442 10.4989 25.25 10.5Z" fill="#2F4CDD"/><path d="M6.5 13H12.75C13.0815 13 13.3995 12.8683 13.6339 12.6339C13.8683 12.3995 14 12.0815 14 11.75C14 11.4185 13.8683 11.1005 13.6339 10.8661C13.3995 10.6317 13.0815 10.5 12.75 10.5H6.5C6.16848 10.5 5.85054 10.6317 5.61612 10.8661C5.3817 11.1005 5.25 11.4185 5.25 11.75C5.25 12.0815 5.3817 12.3995 5.61612 12.6339C5.85054 12.8683 6.16848 13 6.5 13Z" fill="#2F4CDD"/><path d="M5.25 16.75C5.25 17.0815 5.3817 17.3995 5.61612 17.6339C5.85054 17.8683 6.16848 18 6.5 18H17.75C18.0815 18 18.3995 17.8683 18.6339 17.6339C18.8683 17.3995 19 17.0815 19 16.75C19 16.4185 18.8683 16.1005 18.6339 15.8661C18.3995 15.6317 18.0815 15.5 17.75 15.5H6.5C6.16848 15.5 5.85054 15.6317 5.61612 15.8661C5.3817 16.1005 5.25 16.4185 5.25 16.75Z" fill="#2F4CDD"/></svg>
-                            </span>
-                            <div class="media-body">
-                                <h3 class="mb-0 text-black"><span class="counter ml-0">5890</span></h3>
-                                <p class="mb-0">Penjualan</p>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card mt-3 ">
+                            <div class="card-body">
+                                <div class="block margin-bottom-sm">
+                                    <label class="col-sm-form-control-label">Total</label>
+                                    <input id="total-val" name="jumlah" type="text" placeholder="Rp. 0" class="mr-sm-3 form-control">
+                                    <center> <br> 
+                                    <button type="submit" class="btn btn-success">Tambah Penjualan</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>    
+            </form>
 
         </div>
-
     </div>
 </div>
 
-<script src="{{ asset('../asset/vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('../asset/js/plugins-init/sweetalert.init.js') }}"></script>
-@endsection
+<!-- Modal barang Start -->
+<div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Barang</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive"> 
+                     <table class="table table-bordered table-striped verticle-middle table-responsive-sm">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nama Barang</th>
+                        <th>Harga Barang</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                            @foreach ($barang as $br)
+                            <tr >
+                                <td>{{ $br->id }}</td>
+                                <td>{{ $br->item }}</td>
+                                <td style="text-align:left">RP. {{ $br->harga }}</td>
+                                <td>{{ $br->stock }}</td>
+                                <td><input type="button" onclick="pilihBarang('{{ $br -> id }}')" 
+                                value="add" class="btn btn-primary"></td>
+                            </tr>
+                            @endforeach
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Barang End -->
 
-@section('script')
-    <script src="{{ asset('../asset/vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('../asset/js/plugins-init/sweetalert.init.js') }}"></script>
+    
+
+<script>
+	var barang = <?php echo json_encode($barang); ?>;
+	console.log(barang[0]["item"]);
+	var colnum=0;
+
+	function getVal(event){
+		if (event.keyCode === 13) {
+			modal();
+		}
+	}
+
+	function pilihBarang(id){
+		var index;
+		for(var i=0;i<barang.length;i++){
+			if(barang[i]["id"]==id){
+				console.log(barang[i]);
+				index=i;
+				break;
+			}
+		}
+		$("#myModal").modal("hide");
+
+		var table = document.getElementById("keranjang");
+
+        var flag=-1;
+
+        for(var z=1; z<table.rows.length; z++)
+        {
+            var x=table.rows[z].childNodes[0].childNodes[0];
+            console.log(x.value);
+            if(x.value == barang[index]["id"])
+            {
+            flag = z;
+            break;
+            }
+        }
+
+        if(flag != -1)
+        {
+            var colQty = table.rows[flag].childNodes[1].childNodes[0];
+            colQty.value = parseInt(colQty.value) + 1;
+            var idrow = table.rows[flag].childNodes[0].childNodes[0].value;
+            console.log(idrow);
+            recount(idrow);
+        }
+        else
+        {
+		var row = table.insertRow(table.rows.length);
+		row.setAttribute('id','col'+colnum);
+		var id = 'col'+colnum;
+		colnum++;
+
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		var cell5 = row.insertCell(4);
+		console.log(index);
+		cell1.innerHTML = '<input type="hidden" name="id['+barang[index]["id"]+']" value="'+barang[index]["id"]+'">'+barang[index]["item"];
+		cell2.innerHTML = '<input type="number" name="qty['+barang[index]["id"]+']" min="0" max="'+barang[index]["stock"]+'" value="1" oninput="recount(\''+barang[index]["id"]+'\')" id="qty'+barang[index]["id"]+'">';		
+		cell3.innerHTML = '<input type="hidden" id="harga'+barang[index]["id"]+'" name="harga['+barang[index]["id"]+']" value="'+barang[index]["harga"]+'">'+barang[index]["harga"];
+		cell4.innerHTML = '<input type="hidden" class="subtotal" name="subtotal['+barang[index]["id"]+']" value="'+barang[index]["harga"]+'" id="subtotal'+barang[index]["id"]+'"><span id="subtotalval'+barang[index]["id"]+'">'+barang[index]["harga"]+'</span>';
+		cell5.innerHTML = '<button onclick="hapusEl(\''+id+'\')"  class="btn btn-danger">Del</button>';
+
+		total();
+        }
+		 
+	}
+	function lm(i){
+		var min =  document.getElementById("qty"+i).value;
+		if(min <= 1){
+
+		}else{
+		min--;
+		document.getElementById("qty"+i).value = min;
+		recount(i);
+		}
+	}
+	function ln(i){
+		var plus =  document.getElementById("qty"+i).value;
+		console.log(plus);
+		plus++;
+		document.getElementById("qty"+i).value = plus;
+		console.log(plus);
+		recount(i);
+	}
+	function total(){
+		var subtotals = document.getElementsByClassName("subtotal");
+		var total = 0;
+		for(var i=0; i<subtotals.length;++i){
+			total += Number(subtotals[i].value); 
+		}
+		document.getElementById("subtotal-val").value = total;
+		total = parseInt(total);
+		document.getElementById("total-val").value = total;
+
+	}
+
+	function recount(id){
+
+		var price = document.getElementById("harga"+id).value;
+		var sembarang = document.getElementById("qty"+id).value;
+        console.log(price);
+		var lego = Number(price*sembarang);
+		document.getElementById("subtotal"+id).value = lego;
+		document.getElementById("subtotalval"+id).innerHTML = lego;
+		total();
+	}
+
+
+	function modal(){
+		$("#myModal").modal("show");
+		document.getElementById("myText").value = "";
+	}
+	function hapusEl(idCol) {
+		document.getElementById(idCol).remove();
+		total();
+	}
+
+</script>
+
 @endsection

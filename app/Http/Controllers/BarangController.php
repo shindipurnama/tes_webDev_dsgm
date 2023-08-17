@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Barang;
 class BarangController extends Controller
 {
     /**
@@ -14,7 +14,8 @@ class BarangController extends Controller
     public function index()
     {
         //
-        return view('barang');
+        $barang = Barang::All();
+        return view('barang',compact('barang'));
     }
 
     /**
@@ -36,6 +37,9 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
+        Barang::create($request->all());
+        return redirect()->route('barang.index')->with('success','Data Tersimpan');
     }
 
     /**
@@ -70,6 +74,8 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         //
+        barang::find($id)->update($request->all());
+        return redirect()->route('barang.index')->with('success','Data Tersimpan');
     }
 
     /**
@@ -81,5 +87,7 @@ class BarangController extends Controller
     public function destroy($id)
     {
         //
+        barang::find($id)->delete();
+        return back();
     }
 }

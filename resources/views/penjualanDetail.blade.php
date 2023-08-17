@@ -18,7 +18,8 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Data Penjualan</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Penjualan</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Detail Penjualan</a></li>
                 </ol>
             </div>
         </div>
@@ -26,7 +27,7 @@
             <div class="row">
             <div class="card ">
                     <div class="card-header">
-                        <h4 class="card-title">Data Penjualan</h4>
+                        <h4 class="card-title">Detail Penjualan</h4>
                     </div>
 
                     <div class="card-body">
@@ -35,29 +36,22 @@
                                 <thead>
                                     <tr style="text-align:center">
                                         <th>Id </th>
-                                        <th>Tanggal </th>
-                                        <th>User </th>
-                                        <th>Customer </th>
-                                        <th>Jumlah </th>
-                                        <th># </th>
+                                        <th>Item </th>
+                                        <th>Qty </th>
+                                        <th>Harga </th>
+                                        <th>Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($penjualan as $p)
+                                @foreach ($detail as $d)
                                     <tr style="text-align:center">
-                                        <td>{{ $p->id }}</td>
-                                        <td>{{ $p->tanggal }}</td>
-                                        <td>{{ $p->user->name }}</td>
-                                        <td>{{ $p->customer }}</td>
-                                        <td>{{ number_format($p->jumlah) }}</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="{{ route('penjualan.show', $p->id) }}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-book"></i></a>
-                                            </div>	    
-                                        </td>
+                                        <td>{{ $d->id }}</td>
+                                        <td>{{ $d->barang->item }}</td>
+                                        <td>{{ $d->qty }}</td>
+                                        <td>{{number_format($d->harga)  }}</td>
+                                        <td>{{ number_format($d->harga* $d->qty) }}</td>
                                     </tr>
 
-                                    {{-- Detail --}}
                                 @endforeach
                                 </tbody>
                             </table>
