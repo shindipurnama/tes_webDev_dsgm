@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Barang;
+use App\Models\Penjualan;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $barang = Barang::sum('stock');
+        $penjualan = Penjualan::sum('jumlah');
+        return view('home',compact('barang','penjualan'));
     }
 }

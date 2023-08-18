@@ -71,8 +71,7 @@
                                 <div class="block margin-bottom-sm">
                                     <label for="inlineFormInput" class="col-sm-form-control-label">Customer</label>
                                     <input type="text" value="Umum"  name="customer" class="mr-sm-3 form-control">                                        
-                                    <input id="subtotal-val" type="hidden
-                                    " value="Umum"  name="" class="mr-sm-3 form-control">                                        
+                                    <input id="subtotal-val" type="hidden" hidden name="" class="mr-sm-3 form-control">                                        
                                 </div>
                             </div>
                         </div>
